@@ -1,9 +1,13 @@
-DROP TABLE IF EXISTS fzidx_db;
-CREATE TABLE fzidx_db (
-	id MEDIUMINT UNSIGNED NOT NULL auto_increment,
+DROP TABLE IF EXISTS fzidxurls;
+CREATE TABLE fzidxurls (
+	id  MEDIUMINT UNSIGNED NOT NULL auto_increment,
 	uid MEDIUMINT UNSIGNED NOT NULL,
-	dbname VARCHAR(255) NOT NULL,
-	dbfile VARCHAR(255) NOT NULL,
-	srctype VARCHAR(255) NOT NULL,
+	url VARCHAR(1024) NOT NULL,
+	title VARCHAR(255) NOT NULL,
+	lastmdfy DATETIME default NULL,
+	lastchk DATETIME default NULL,
+	type ENUM('rss','html','text'),
 	PRIMARY KEY (id)
 );
+
+

@@ -50,7 +50,7 @@ sub showInsert {
     my $ua = LWP::UserAgent->new(timeout => 10);
     my $response = $ua->get($url);
     if ($response->is_success) {
-	my $txt = dumpHTMLText($response);
+	my $txt = $self->dumpHTMLText($response);
 	$self->insert({
 		url   => $url,
 		title => $title,
@@ -97,16 +97,4 @@ sub showMain {
 createEnvironment();
 main();
 1;
-
-# sub routines.
-sub dumpHTMLText {
-    my($response) = @_;
-    my $charset = getCharset($response);
-    my $content = $response->content;
-    $content =~ s/<.*?>//sg;
-    $content =~ s/&(\w+?|\#\d+);/ /sg;
-    $content =~ s/(\s)\s+/$1/sg;
-    from_to($content,$charset,"utf8");
-    return $content;
-}
 

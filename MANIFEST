@@ -9,3 +9,5 @@ mysql_schema
 README
 PLUGIN
 MANIFEST
+t/use.t
+

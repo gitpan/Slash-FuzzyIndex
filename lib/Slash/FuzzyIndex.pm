@@ -14,7 +14,7 @@ use base 'Exporter';
 use base 'Slash::DB::Utility';
 use base 'Slash::DB::MySQL';
 
-$VERSION = '0.3';
+$VERSION = '0.4';
 
 =head1 NAME
 
@@ -84,6 +84,23 @@ sub insert {
     return $self->{fzdb}->insert(Dump($key),$content);
 }
 
+sub delete {
+    my ($self,$key) = @_;
+    return unless ($self->{fzdb});
+
+    my $title   = $obj->{title};
+    my $url     = $obj->{url};
+
+    Encode::from_to($title  ,'utf8','big5');
+    Encode::from_to($url    ,'utf8','big5');
+
+    my $key = { url     => $url,
+		title   => $title
+		};
+
+    return $self->{fzdb}->delete(Dump($key));
+}
+
 # return a arrayref of hashref(objects)
 sub query {
     my ($self,$key) = @_;
@@ -105,6 +122,70 @@ sub query {
 	push @results,$entry;
     }
     return @results;
+}
+
+# sub routines.
+sub dumpHTMLText {
+    my($response) = @_;
+    my $charset = getCharset($response);
+    my $content = $response->content;
+    $content =~ s/<.*?>//sg;
+    $content =~ s/&(\w+?|\#\d+);/ /sg;
+    $content =~ s/(\s)\s+/$1/sg;
+    from_to($content,$charset,"utf8");
+    return $content;
+}
+
+sub getUrls {
+    my ($self,$param) = @_;
+    my $where = undef;
+    if($param->{updated}) {
+	$where = "lastmdfy > lastchk";
+    }
+
+    if($param->{type} =~ /rss/i) {
+	$where = 'type="rss"';
+    }elsif($param->{type} =~ /html/i) {
+	$where = 'type="html"';
+    }elsif($param->{type} =~ /text/i){
+	$where = 'type="text"';
+    }
+
+    my $slashdb = getCurrentDB();
+
+    my $urls = $slashdb->sqlSelectAllHashrefArray('id,url,title','fzidxurls',$where);
+
+    return $urls;
+}
+
+sub addUrls {
+    my ($self,$param) = @_;
+
+    my $user = getCurrentUser();
+    my $slashdb = getCurrentDB();
+
+    if($param->{type} =~ /rss/i) {
+	$type = 'rss';
+    }elsif($param->{type} =~ /html/i) {
+	$type = 'html';
+    }else{
+	$type = 'text';
+    }
+
+    return $slashdb->sqlInsert
+	('fzidxurls',
+	 { url => $param->{url},
+	   uid => $user->{uid},
+	   type => $type,
+       });
+
+}
+
+sub updateUrlMdfy {
+    my ($self,$id,$time) = @_;
+    my $slashdb = getCurrentDB();
+    return $slashdb->sqlUpdate
+	('fzidxurls', { lastmdfy => $time} ,"id=${id}");
 }
 
 1;
