@@ -1,0 +1,11 @@
+htdoc/fzquery.pl
+templates/result;fzquery;default
+templates/main;fzquery;default
+templates/insert;fzquery;default
+tasks/feed-fzdb.pl
+lib/Slash/FuzzyIndex.pm
+Makefile.PL
+mysql_schema
+README
+PLUGIN
+MANIFEST

@@ -1,0 +1,26 @@
+__section__
+default
+__description__
+display FuzzyIndex insertion results
+__title__
+
+__page__
+fzquery
+__lang__
+zh_TW
+__name__
+insert
+__template__
+<h1>加入資料</h1>
+[% IF error %]
+<h1 class="error">
+[% SWITCH msg %]
+[% CASE "CANNOT_RETRIEVE_URL" %]
+無法取得該 URL 內容
+[% END %]
+</h1>
+[% ELSE %]
+<h1>成功加入此筆資料</h1>
+[% END %]
+__seclev__
+1000

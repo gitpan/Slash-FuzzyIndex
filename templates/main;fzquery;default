@@ -1,0 +1,34 @@
+__section__
+default
+__description__
+Show FuzzyIndex/Query interface.
+__title__
+
+__page__
+fzquery
+__lang__
+zh_TW
+__name__
+main
+__template__
+<h1>搜尋</h1>
+<form name="fzquery" action="fzquery.pl" method="GET">
+<input type="hidden" name="op" value="query" />
+<label>Text</label><input name="txt" type="text" value="[% form.txt %]" />
+<input type="submit" name="doquery" value="搜尋" />
+</form>
+
+<h1>增加資料</h1>
+<form name="fzinsert" action="fzquery.pl" method="GET">
+<input type="hidden" name="op" value="insert" />
+
+<label>URL</label>
+<input name="url" type="text" value="[% form.url %]" /><br />
+
+<label>Title</label>
+<input name="title" type="text" value="[% form.title %]" /><br />
+
+<input type="submit" name="doquery" value="增加" />
+</form>
+__seclev__
+1000

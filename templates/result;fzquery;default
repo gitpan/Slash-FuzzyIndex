@@ -1,0 +1,28 @@
+__section__
+default
+__description__
+display FuzzyIndex query results
+__title__
+
+__page__
+fzquery
+__lang__
+zh_TW
+__name__
+result
+__template__
+<h1>查詢 " [% form.txt %] " 的結果</h1>
+[% IF debug %]
+<h3 class="debug">Debug: [% debug %]</h3>
+[% END %]
+<table>
+<tr><td>分數</td><td>標題</td></tr>
+[% FOREACH entry = results %]
+<tr>
+  <td>[% entry.score %]</td>
+  <td><a href="[% entry.url %]">[% entry.title %]</a></td>
+</tr>
+[% END %]
+</table>
+__seclev__
+1000

@@ -1,0 +1,9 @@
+name=FuzzyIndex
+description="FuzzyIndex for Slash"
+mysql_schema=mysql_schema
+htdoc=htdoc/fzquery.pl
+task=tasks/feed-fzdb.pl
+template=templates/main;fzquery;default
+template=templates/result;fzquery;default
+template=templates/insert;fzquery;default
+
