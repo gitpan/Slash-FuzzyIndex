@@ -14,7 +14,7 @@ use base 'Exporter';
 use base 'Slash::DB::Utility';
 use base 'Slash::DB::MySQL';
 
-$VERSION = '0.4';
+$VERSION = '0.5';
 
 =head1 NAME
 
@@ -85,7 +85,7 @@ sub insert {
 }
 
 sub delete {
-    my ($self,$key) = @_;
+    my ($self,$obj) = @_;
     return unless ($self->{fzdb});
 
     my $title   = $obj->{title};
@@ -110,7 +110,7 @@ sub query {
 
     my @results;
     my %_result = $self->{fzdb}->query($key);
-    foreach my $idx (sort {$_result{$b} <=> $_result{$a}} keys(%_result) {
+    foreach my $idx (sort {$_result{$b} <=> $_result{$a}} keys(%_result)) {
 	my $score = $_result{$idx};
 	my $k = Load($self->{fzdb}->getkey($idx));
 	Encode::from_to($k->{title},'big5','utf8');
@@ -163,7 +163,7 @@ sub addUrls {
 
     my $user = getCurrentUser();
     my $slashdb = getCurrentDB();
-
+    my $type;
     if($param->{type} =~ /rss/i) {
 	$type = 'rss';
     }elsif($param->{type} =~ /html/i) {
