@@ -14,7 +14,7 @@ use base 'Exporter';
 use base 'Slash::DB::Utility';
 use base 'Slash::DB::MySQL';
 
-$VERSION = '0.5';
+$VERSION = '0.6';
 
 =head1 NAME
 

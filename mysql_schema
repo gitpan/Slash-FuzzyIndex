@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS fzidxurls;
 CREATE TABLE fzidxurls (
 	id  MEDIUMINT UNSIGNED NOT NULL auto_increment,
 	uid MEDIUMINT UNSIGNED NOT NULL,
-	url VARCHAR(1024) NOT NULL,
+	url TEXT NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	lastmdfy DATETIME default NULL,
 	lastchk DATETIME default NULL,
